@@ -15,9 +15,10 @@ const int gnormalFormat = RGBA16;
 
 	const int shadowMapResolution = SHADOW_MAP_RESOLUTION;		//shadowmap resolution
 	const float shadowDistance = SHDAOW_DISTANCE;		//draw distance of shadows
-	const bool 	shadowHardwareFiltering0 = true;
+	const bool 	shadowHardwareFiltering0 = true; //禁用会导致无阴影（完全处于阴影面）
 	const float	sunPathRotation	= SUN_PATH_ROTATION;
 
+	//这里的水下修复关闭了，反而能让水下正常
 	#define UNDERWATERFIX //fixes shadows and other stuff underwater
 /*
 
@@ -81,7 +82,7 @@ Not respecting these rules can and will result varying a request of thread/downl
 
 
 #define VIGNETTE
-#define VIGNETTE_STRENGTH 1. 
+#define VIGNETTE_STRENGTH 1.0
 #define VIGNETTE_START 0.1	//distance from the center of the screen where the vignette effect start (0-1)
 #define VIGNETTE_END 1.25		//distance from the center of the screen where the vignette effect end (0-1), bigger than VIGNETTE_START
 	//#define GODRAYS			//varying this step previous godrays result is blurred
@@ -117,8 +118,8 @@ varying float fading;
 varying vec2 lightPos;
 
 varying vec3 sunlight;
-const vec3 moonlight = vec3(0.5, 0.9, 1.4) * 0.005;
-const vec3 moonlightS =vec3(0.575, 1.05, 1.4) * 0.01;
+const vec3 moonlight = vec3(0.5, 0.9, 1.4) * 0.005; //暂时看不到效果
+const vec3 moonlightS =vec3(0.575, 1.05, 1.4) * 0.01; //影响夜晚原版云和雾气
 varying vec3 ambient_c;
 varying float tr;
 
@@ -452,10 +453,10 @@ vec3 color = albedo.xyz;
 if (land){
 float fog = FogF(fragpos.xyz);
 float tmult = mix(min(abs(worldTime-6000.0)/6000.0,1.0),1.0,rainStrength);
-vec3 fogC = getSkyColor(normalize(fragpos.xyz))*1.7*(0.7+0.3*tmult)*(1.33-rainStrength*0.8);
+vec3 fogC = getSkyColor(normalize(fragpos.xyz))*1.7*(0.7+0.3*tmult)*(1.33-rainStrength*0.8); //调整雾气
 
 if (isEyeInWater < 0.9)color = mix(color,fogC,fog);
-else color = mix(color*0.4,vec3(0.25,0.5,0.72)*rawAvg*0.07,1.-exp(-length(fragpos.xyz)/40));
+else color = mix(color*0.4,vec3(0.25,0.5,0.72)*rawAvg*0.07,1.-exp(-length(fragpos.xyz)/40)); //水下雾颜色
 }
 	if (rainStrength > 0.01){
 	vec4 rain = texture2D(composite,texcoord);

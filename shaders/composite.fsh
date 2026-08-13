@@ -1534,7 +1534,6 @@ gr = 0.0;
 
 
 
-
 gl_FragData[0] = vec4(gr);
 }
 /* DRAWBUFFERS:1 */

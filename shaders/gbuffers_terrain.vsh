@@ -1,5 +1,7 @@
 #version 120
 
+//建议先合并相同代码到库，再处理gbuffers相关内容!!!
+
 /*
 !! DO NOT REMOVE !!
 This code is from Chocapic13' shaders
@@ -137,7 +139,7 @@ void main() {
 
 	float fallof1 = clamp(1.0 - pow(torch_lightmap/16.0,4.0),0.0,1.0);
 	torch_lightmap = fallof1*fallof1/(torch_lightmap*torch_lightmap+1.0);
-	const vec3 moonlight = vec3(0.5, 0.9, 1.4) * 0.002;
+	const vec3 moonlight = vec3(0.5, 0.9, 1.4) * 0.002; //可以调整夜晚地表亮度
 
 	vec3 sunVec = normalize(sunPosition);
 	vec3 upVec = normalize(upPosition);
