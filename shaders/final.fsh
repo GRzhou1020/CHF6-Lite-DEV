@@ -1,5 +1,11 @@
 #version 400 compatibility
 
+#define SHADOW_MAP_RESOLUTION 1024 //[256 512 1024 1536 2048 4096]
+#define SHDAOW_DISTANCE 128.0 //[32.0 64.0 128.0 256.0 512.0 1024.0]
+#define SHADOW_HARDWARE_FILTERING0
+
+#define SUN_PATH_ROTATION -40.0 //[-45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -5.0 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0]
+
 /*
 const int gcolorFormat = RGBA16;		//backward optifine compatibility
 const int gcolorFormat = R11F_G11F_B10F;
@@ -7,10 +13,10 @@ const int gdepthFormat = RGBA8;
 const int gnormalFormat = RGBA16;
 */
 
-	const int shadowMapResolution = 1024;		//shadowmap resolution
-	const float shadowDistance = 120.0;		//draw distance of shadows
+	const int shadowMapResolution = SHADOW_MAP_RESOLUTION;		//shadowmap resolution
+	const float shadowDistance = SHDAOW_DISTANCE;		//draw distance of shadows
 	const bool 	shadowHardwareFiltering0 = true;
-	const float	sunPathRotation	= -40.0f;
+	const float	sunPathRotation	= SUN_PATH_ROTATION;
 
 	#define UNDERWATERFIX //fixes shadows and other stuff underwater
 /*
